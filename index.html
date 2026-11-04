@@ -73,6 +73,11 @@ nav{display:flex;gap:6px}nav a{padding:9px 12px;border-radius:9px;color:var(--in
 .bt{flex:1 0 84px;max-width:130px;text-align:center}.bt img,.bt>span{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px;background:var(--sky);display:flex;align-items:center;justify-content:center;font-size:36px}.bt small{display:block;font-size:11px;margin-top:4px;line-height:1.4}
 .cl{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}.cl .ci{flex:0 0 96px}.cl .ci .bt{max-width:96px}.cl .cb{flex:1}.cl .ct{font-weight:900;white-space:nowrap}
 .qty{display:flex;align-items:center;gap:8px;margin-top:6px}.qty button{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--card);font-size:18px}.qty .rm{width:auto;padding:0 10px;font-size:12px;color:var(--red)}.qty span{min-width:22px;text-align:center;font-weight:700}
+.search{position:relative}.sg{position:absolute;top:100%;right:0;left:0;background:var(--card);border:1px solid var(--line);border-radius:10px;z-index:30;display:none;max-height:260px;overflow:auto;box-shadow:0 6px 18px #0002}.sg a{display:block;padding:10px 12px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:13px;cursor:pointer}
+.heart{position:absolute;top:8px;left:8px;width:34px;height:34px;border-radius:50%;background:#fffd;border:0;font-size:20px;color:var(--red);z-index:2}.wb{background:none;border:0;font-size:24px;color:var(--red);vertical-align:middle}
+.fbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 14px}.fbar select,.fbar input[type=number]{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px;color:var(--ink)}.rt{margin:18px 0 10px;font-size:18px}
+.zoom{position:fixed;inset:0;background:#000;z-index:90;display:flex;align-items:center;justify-content:center}.zoom img{max-width:100%;max-height:100%;touch-action:pinch-zoom}.zoom button{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:14px;z-index:2;background:#fff3;color:#fff;border-radius:50%;width:40px;height:40px;font-size:20px}
+.pg p,.pg li{line-height:2}.fl{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin:6px 0 10px}.fl a{color:var(--muted);text-decoration:none;font-size:12px}
 footer{text-align:center;color:var(--muted);font-size:12px;padding:24px 0}
 .pd{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:18px 0}@media(max-width:700px){.pd{grid-template-columns:1fr}}.main{border:1px solid var(--line);border-radius:14px;height:340px;display:flex;align-items:center;justify-content:center;font-size:120px;overflow:hidden;background:#fff}.main img{max-width:100%;max-height:100%;object-fit:contain}.thumbs{display:flex;gap:8px;margin-top:8px;overflow-x:auto}.thumbs img{width:64px;height:64px;object-fit:cover;border:1px solid var(--line);border-radius:8px;cursor:pointer}.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 14px}.chip{padding:9px 15px;border-radius:9px;border:1.5px solid var(--line);background:var(--card)}.chip.on{border-color:#000;background:#000;color:#fff}.stars{color:#f5a623;letter-spacing:2px}.rbar{display:flex;align-items:center;gap:8px;font-size:12px;margin:4px 0}.rbar i{flex:1;height:8px;background:var(--line);border-radius:5px;overflow:hidden}.rbar u{display:block;height:100%;background:#111}.rev{border-top:1px solid var(--line);padding:12px 0}.rev b{display:block}
 .pd>div{min-width:0}.wrap p>a{color:var(--ink);font-weight:700;text-decoration:none}.car{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;border-radius:14px;background:#f4f4f4}.car::-webkit-scrollbar{display:none}.sl{flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always;aspect-ratio:1/1}.sl img{width:100%;height:100%;object-fit:cover;display:block;user-select:none;-webkit-user-drag:none}.dots{display:flex;justify-content:center;gap:6px;margin:12px 0}.dots i{width:7px;height:7px;border-radius:5px;background:#cfcfcf;transition:all .25s;cursor:pointer}.dots i.on{width:22px;background:#111}@media(max-width:700px){.car{margin:0 -16px;border-radius:0}}
@@ -81,8 +86,8 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px 0}
 <body>
 <header><div class="wrap head">
 <div class="logo" onclick="location.hash='store'">NEX<span>ORA</span></div>
-<div class="search" id="sbox"><input id="q" placeholder="ابحث عن منتج..." oninput="renderStore()"></div>
-<nav><a href="#store">الرئيسية</a><a href="#track">طلباتي</a><a href="#terms">الشروط</a><a href="#cart">🛒 العربة<b id="cc"></b></a><a id="inst" onclick="installApp()" style="display:none;cursor:pointer;background:var(--sky)">⬇ ثبّت التطبيق</a></nav>
+<div class="search" id="sbox"><input id="q" placeholder="ابحث عن منتج..." oninput="onSearch()" autocomplete="off"><div id="sg" class="sg"></div></div>
+<nav><a href="#store">الرئيسية</a><a href="#track">طلباتي</a><a href="#terms">الشروط</a><a href="#wish">❤️ المفضلة</a><a href="#cart">🛒 العربة<b id="cc"></b></a><a id="inst" onclick="installApp()" style="display:none;cursor:pointer;background:var(--sky)">⬇ ثبّت التطبيق</a></nav>
 </div></header>
 <main class="wrap" id="app"></main>
 <footer id="foot"></footer>
@@ -121,13 +126,13 @@ let cat="الكل",tab="dash",authed=false,sel=null;
 function route(){
  const h=location.hash.slice(1)||"store";
  $("sbox").style.visibility=h==="store"?"visible":"hidden";
- if(h===ADM)renderAdmin();else if(h==="cart")renderCart();else if(h.startsWith("p-"))renderProd(+h.slice(2));else if(h==="track")renderTrack();else if(h==="terms")renderTerms();else renderStore();
+ if(h===ADM)renderAdmin();else if(h==="cart")renderCart();else if(h==="wish")renderWish();else if(PGS[h])renderPage(h);else if(h.startsWith("p-"))renderProd(+h.slice(2));else if(h==="track")renderTrack();else if(h==="terms")renderTerms();else renderStore();
  window.scrollTo(0,0);renderFoot();renderWA();fillBundles();
 }
 window.addEventListener("hashchange",route);
 
 /* ===== الموقع ===== */
-function renderStore(){
+function renderStore0(){
  const app=$("app"),q=($("q")||{value:""}).value.trim().toLowerCase();
  const act=products.filter(p=>p.active);
  const cats=["الكل",...new Set(act.map(catOf))];
@@ -135,7 +140,7 @@ function renderStore(){
  if(!document.getElementById("grid")){
   app.innerHTML=`<section class="hero"><div style="color:#b9dcff;font-size:13px;font-weight:700">EVERYTHING. ONE PLACE.</div><h1>اكتشف أكثر.. تسوّق أسهل</h1><p>منتجات متنوعة في مكان واحد. اختر منتجك وادفع عربون جدية الحجز ${cfg.fee} جنيه، وبعد تأكيد الدفع نتواصل معك لإتمام الطلب والتوصيل.</p><button class="btn" onclick="document.getElementById('grid').scrollIntoView({behavior:'smooth'})">تصفح المنتجات</button></section>
   <div class="trust"><div><b>عربون جدية حجز</b>${cfg.fee} جنيه فقط لتأكيد طلبك</div><div><b>تأكيد قبل التجهيز</b>لا يبدأ تجهيز طلبك قبل تأكيد الدفع</div><div><b>تواصل مباشر</b>نتواصل معك لإتمام الطلب والتوصيل</div></div>
-  <div id="bnd"></div><div class="cats" id="cats"></div><div class="grid" id="grid"></div>`;
+  <div id="bnd"></div><div id="rails"></div><div class="cats" id="cats"></div><div class="fbar"><select onchange="sortBy=this.value;applyView()"><option value="new">الأحدث</option><option value="low">الأرخص</option><option value="high">الأغلى</option><option value="rate">الأعلى تقييماً</option><option value="disc">الأعلى خصماً</option></select><label class="chk" style="margin:0"><input type="checkbox" onchange="offOnly=this.checked;applyView()"><span>عروض فقط</span></label><input type="number" inputmode="numeric" placeholder="أقصى سعر" style="width:110px" oninput="maxP=+this.value||0;applyView()"></div><div class="grid" id="grid"></div>`;
  }
  $("cats").innerHTML=cats.map(c=>`<button class="cat ${c===cat?"on":""}" onclick="cat='${esc(c)}';renderStore()">${esc(c)}</button>`).join("");
  $("grid").innerHTML=shown.map(p=>`<article class="prod"><div class="ph">${offerOn(p)?`<span class="badge">خصم ${p.dp||30}%</span>`:""}${p.imgs&&p.imgs[0]?`<img src="${p.imgs[0]}" alt="">`:esc(p.emoji)}</div><div class="pb"><div class="tag">${esc(catOf(p))}</div><h3>${esc(p.name)}</h3>${starsLine(p.id)}${priceHtml(p)}<button class="btn p" onclick="location.hash='p-${p.id}'">التفاصيل والطلب</button></div></article>`).join("")||'<div class="empty" style="grid-column:1/-1">لا توجد منتجات مطابقة.</div>';
@@ -195,7 +200,7 @@ function aDash(){
  $("ac").innerHTML=`<div class="stats"><div class="stat"><label>إجمالي الطلبات</label><strong>${orders.length}</strong></div><div class="stat"><label>بانتظار المراجعة</label><strong>${wait}</strong></div><div class="stat"><label>طلبات مؤكدة</label><strong>${paid.length}</strong></div><div class="stat"><label>إجمالي العرابين المؤكدة</label><strong>${money(rev)}</strong></div><div class="stat"><label>المنتجات / المتاجر</label><strong>${products.length} / ${stores.length}</strong></div></div><div class="box"><b>رابط الموقع للإعلانات</b><div class="f" style="margin:8px 0"><input readonly value="${esc(baseUrl())}" onclick="this.select()"></div><button class="btn s" onclick="copyLink(baseUrl())">نسخ الرابط</button></div><div class="note">الإجمالي = عدد الطلبات المؤكدة × مبلغ العربون. البيانات محفوظة على السيرفر.</div>`;
 }
 function aOrders(){
- $("ac").innerHTML=`<div class="bar"><h2>الطلبات</h2></div><div class="box tw" style="margin:0"><table><tr><th>الطلب</th><th>العميل</th><th>المنتج / المتجر</th><th>الدفع</th><th>الحالة</th><th></th></tr>${orders.map(o=>`<tr><td><b>${o.ref}</b></td><td>${esc(o.name)}<br><span class="st" dir="ltr">${esc(o.phone)}</span></td><td>${esc(o.product)}<br><span class="st">${esc(sName(o.storeId))}</span></td><td>${o.pay}<br><span class="st">${esc(o.txn||"—")}</span></td><td><select onchange="setStatus(${o.id},this.value)">${ST.map(s=>`<option ${s===o.status?"selected":""}>${s}</option>`).join("")}</select></td><td>${PAID.includes(o.status)?`<button class="btn s g" onclick="sendWA(${o.id})">إرسال للمتجر</button>`:""}</td></tr>`).join("")||'<tr><td colspan="6" class="empty">لا توجد طلبات بعد.</td></tr>'}</table></div>`;
+ $("ac").innerHTML=`<div class="bar"><h2>الطلبات</h2></div><div class="box tw" style="margin:0"><table><tr><th>الطلب</th><th>العميل</th><th>المنتج / المتجر</th><th>الدفع</th><th>الحالة</th><th></th></tr>${orders.map(o=>`<tr><td><b>${o.ref}</b></td><td>${esc(o.name)}<br><span class="st" dir="ltr">${esc(o.phone)}</span></td><td>${esc(o.product)}<br><span class="st">${esc(sName(o.storeId))}</span></td><td>${o.pay}<br><span class="st">${esc(o.txn||"—")}</span></td><td><select onchange="setStatus(${o.id},this.value)">${ST.map(s=>`<option ${s===o.status?"selected":""}>${s}</option>`).join("")}</select><br><input style="margin-top:6px;width:130px" placeholder="رقم الشحنة" value="${esc(o.tracking||"")}" onchange="setTrk(${o.id},'tracking',this.value)"><input style="margin-top:4px;width:130px" placeholder="رابط التتبع" value="${esc(o.courier||"")}" onchange="setTrk(${o.id},'courier',this.value)"></td><td>${PAID.includes(o.status)?`<button class="btn s g" onclick="sendWA(${o.id})">إرسال للمتجر</button>`:""}</td></tr>`).join("")||'<tr><td colspan="6" class="empty">لا توجد طلبات بعد.</td></tr>'}</table></div>`;
 }
 function setStatus(id,s){orders.find(o=>o.id===id).status=s;save();aOrders()}
 function sendWAold(id){
@@ -238,11 +243,11 @@ function delItem(k,id){
  save();k==="stores"?aStores2():(sel?aStores2():aProducts());
 }
 function aSet(){
- $("ac").innerHTML=`<div class="box"><h2>الإعدادات</h2><div class="f"><label>مبلغ عربون جدية الحجز (جنيه)</label><input id="c1" type="number" value="${cfg.fee}"></div><div class="f"><label>رقم فودافون كاش لاستلام الرسوم</label><input id="c2" value="${esc(cfg.vf)}"></div><div class="f"><label>عنوان إنستاباي</label><input id="c3" value="${esc(cfg.ip)}"></div><div class="f"><label>أرقام واتساب التواصل (كل سطر: الاسم|الرقم)</label><textarea id="c7" rows="3" placeholder="خدمة العملاء|01000000000">${esc(cfg.wa||"")}</textarea></div><div class="f"><label>رسالة واتساب الافتتاحية</label><input id="c11" value="${esc(cfg.waMsg||"")}"></div><div class="f"><label>رابط إنستغرام</label><input id="c8" value="${esc(cfg.ig||"")}" placeholder="https://instagram.com/..."></div><div class="f"><label>رابط فيسبوك</label><input id="c9" value="${esc(cfg.fb||"")}" placeholder="https://facebook.com/..."></div><div class="f"><label>رابط تيك توك</label><input id="c10" value="${esc(cfg.tt||"")}" placeholder="https://tiktok.com/@..."></div><div class="f"><label>رابط الموقع (الصق رابط النشر هنا)</label><input id="c6" value="${esc(cfg.siteUrl||"")}" placeholder="https://claude.ai/artifact/..."></div><div class="f"><label>سياسة العربون عند الإلغاء (تظهر للعميل في الشروط)</label><input id="c5" value="${esc(cfg.policy)}"></div><button class="btn p" onclick="saveCfg()">حفظ</button> <div class="msg" id="cm" style="color:var(--green)"></div></div>`;
+ $("ac").innerHTML=`<div class="box"><h2>الإعدادات</h2><div class="f"><label>مبلغ عربون جدية الحجز (جنيه)</label><input id="c1" type="number" value="${cfg.fee}"></div><div class="f"><label>رقم فودافون كاش لاستلام الرسوم</label><input id="c2" value="${esc(cfg.vf)}"></div><div class="f"><label>عنوان إنستاباي</label><input id="c3" value="${esc(cfg.ip)}"></div><div class="f"><label>أرقام واتساب التواصل (كل سطر: الاسم|الرقم)</label><textarea id="c7" rows="3" placeholder="خدمة العملاء|01000000000">${esc(cfg.wa||"")}</textarea></div><div class="f"><label>رسالة واتساب الافتتاحية</label><input id="c11" value="${esc(cfg.waMsg||"")}"></div><div class="f"><label>رابط إنستغرام</label><input id="c8" value="${esc(cfg.ig||"")}" placeholder="https://instagram.com/..."></div><div class="f"><label>رابط فيسبوك</label><input id="c9" value="${esc(cfg.fb||"")}" placeholder="https://facebook.com/..."></div><div class="f"><label>رابط تيك توك</label><input id="c10" value="${esc(cfg.tt||"")}" placeholder="https://tiktok.com/@..."></div><div class="f"><label>نص «من نحن» (فاضي = النص الافتراضي)</label><textarea id="c12" rows="3">${esc(cfg.pg_about||"")}</textarea></div><div class="f"><label>نص «الاسترجاع والاستبدال»</label><textarea id="c13" rows="3">${esc(cfg.pg_returns||"")}</textarea></div><div class="f"><label>نص «سياسة الخصوصية»</label><textarea id="c14" rows="3">${esc(cfg.pg_privacy||"")}</textarea></div><div class="f"><label>نص «الأسئلة الشائعة» (سؤال وجواب في سطور)</label><textarea id="c15" rows="4">${esc(cfg.pg_faq||"")}</textarea></div><div class="f"><label>رابط الموقع (الصق رابط النشر هنا)</label><input id="c6" value="${esc(cfg.siteUrl||"")}" placeholder="https://claude.ai/artifact/..."></div><div class="f"><label>سياسة العربون عند الإلغاء (تظهر للعميل في الشروط)</label><input id="c5" value="${esc(cfg.policy)}"></div><button class="btn p" onclick="saveCfg()">حفظ</button> <div class="msg" id="cm" style="color:var(--green)"></div></div>`;
 }
 function saveCfg(){
  const f=+$("c1").value;if(!(f>0)){$("cm").textContent="الرسوم غير صالحة.";return}
- cfg={fee:f,vf:$("c2").value.trim(),ip:$("c3").value.trim(),policy:$("c5").value.trim(),siteUrl:$("c6").value.trim(),wa:$("c7").value,waMsg:$("c11").value.trim(),ig:$("c8").value.trim(),fb:$("c9").value.trim(),tt:$("c10").value.trim(),adSpend:cfg.adSpend||0};save();$("cm").textContent="تم الحفظ ✓";
+ cfg={fee:f,vf:$("c2").value.trim(),ip:$("c3").value.trim(),policy:$("c5").value.trim(),siteUrl:$("c6").value.trim(),wa:$("c7").value,waMsg:$("c11").value.trim(),ig:$("c8").value.trim(),fb:$("c9").value.trim(),tt:$("c10").value.trim(),adSpend:cfg.adSpend||0,pg_about:$("c12").value,pg_returns:$("c13").value,pg_privacy:$("c14").value,pg_faq:$("c15").value};save();$("cm").textContent="تم الحفظ ✓";
 }
 function aStores2(){
  if(sel){
@@ -284,7 +289,7 @@ function pick(k,b){const v=b.textContent;if(k==="C")selC=v;else selS=v;b.parentN
 function renderProd(id){
  const p=products.find(x=>x.id===id);if(!p||!p.active){location.hash="store";return}
  selC="";selS="";const im=p.imgs||[],ch=(a,k)=>a&&a.length?a.map(c=>`<button class="chip" onclick="pick('${k}',this)">${esc(c)}</button>`).join(""):"";
- $("app").innerHTML=`<p><a href="#store">→ رجوع للمنتجات</a></p><div class="pd"><div>${im.length?`<div class="car" id="car" onscroll="carDot()">${im.map(s=>`<div class="sl"><img src="${s}" alt=""></div>`).join("")}</div>${im.length>1?`<div class="dots" id="dots">${im.map((_,i)=>`<i class="${i?"":"on"}" onclick="goSl(${i})"></i>`).join("")}</div>`:""}`:`<div class="main">${esc(p.emoji)}</div>`}</div><div><div class="tag">${esc(catOf(p))}</div><h1 style="margin:6px 0;font-size:22px">${esc(p.name)}</h1>${starsLine(p.id)}${priceHtml(p)}${(p.colors||[]).length?`<b>اللون</b><div class="chips">${ch(p.colors,"C")}</div>`:""}${(p.sizes||[]).length?`<b>المقاس</b><div class="chips">${ch(p.sizes,"S")}</div>`:""}<p style="line-height:1.9;color:var(--muted);white-space:pre-line">${esc(p.desc||"")}</p><button class="btn p" style="width:100%;padding:14px" onclick="startOrder(${p.id})">اطلب الآن</button>${stepsHtml()}</div></div><div class="box" id="rvs"></div>${relHtml(p)}`;
+ $("app").innerHTML=`<p><a href="#store">→ رجوع للمنتجات</a></p><div class="pd"><div>${im.length?`<div class="car" id="car" onscroll="carDot()">${im.map(s=>`<div class="sl"><img src="${s}" alt="" onclick="zoomImg(this.src)"></div>`).join("")}</div>${im.length>1?`<div class="dots" id="dots">${im.map((_,i)=>`<i class="${i?"":"on"}" onclick="goSl(${i})"></i>`).join("")}</div>`:""}`:`<div class="main">${esc(p.emoji)}</div>`}</div><div><div class="tag">${esc(catOf(p))}</div><h1 style="margin:6px 0;font-size:22px">${esc(p.name)} <button class="wb" data-h="${p.id}" onclick="toggleWish(${p.id})">${wish.includes(p.id)?"♥":"♡"}</button></h1>${starsLine(p.id)}${priceHtml(p)}${(p.colors||[]).length?`<b>اللون</b><div class="chips">${ch(p.colors,"C")}</div>`:""}${(p.sizes||[]).length?`<b>المقاس</b><div class="chips">${ch(p.sizes,"S")}</div>`:""}<p style="line-height:1.9;color:var(--muted);white-space:pre-line">${esc(p.desc||"")}</p><button class="btn p" style="width:100%;padding:14px" onclick="startOrder(${p.id})">اطلب الآن</button>${stepsHtml()}</div></div><div class="box" id="rvs"></div>${relHtml(p)}`;
  drawRev(p.id);
 }
 const baseUrl=()=>(cfg.siteUrl||location.href).trim().split("#")[0];
@@ -311,12 +316,12 @@ const IGI='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#
 const waList=()=>String(cfg.wa||"").split("\n").map(l=>l.split("|").map(x=>x.trim())).map(a=>a.length>1?{l:a[0],n:a[1]}:{l:"واتساب",n:a[0]}).filter(x=>x.n.replace(/\D/g,"").length>=10);
 const waUrl=n=>"https://wa.me/"+n.replace(/\D/g,"").replace(/^0/,"20")+"?text="+encodeURIComponent(cfg.waMsg||"مرحباً NEXORA، عندي استفسار");
 function renderWA(){const l=waList(),b=$("wab");b.classList.toggle("show",l.length>0);b.innerHTML=WAI;b.onclick=null;if(l.length===1){b.href=waUrl(l[0].n)}else{b.removeAttribute("href");b.onclick=()=>openM(`<h3>تواصل معنا عبر واتساب</h3>${l.map(x=>`<a class="btn g" style="display:block;text-align:center;text-decoration:none;margin-bottom:8px" target="_blank" rel="noopener" href="${waUrl(x.n)}">${esc(x.l)}</a>`).join("")}`)}}
-function renderFoot(){const ok=u=>/^https?:\/\//.test(u||""),S=[[cfg.ig,"background:linear-gradient(45deg,#f09433,#dc2743,#bc1888)",IGI,"Instagram"],[cfg.fb,"background:#1877f2","f","Facebook"],[cfg.tt,"background:#000","♪","TikTok"]].filter(s=>ok(s[0])).map(s=>`<a href="${esc(s[0])}" target="_blank" rel="noopener" style="${s[1]}" aria-label="${s[3]}">${s[2]}</a>`),w=waList();if(w.length)S.push(`<a href="${waUrl(w[0].n)}" target="_blank" rel="noopener" style="background:#25d366" aria-label="WhatsApp">${WAI.replace(/30/g,"22")}</a>`);$("foot").innerHTML=(S.length?`<div style="font-weight:700;color:var(--ink)">تابعنا</div><div class="soc">${S.join("")}</div>`:"")+"© NEXORA — اكتشف أكثر.. تسوّق أسهل"}
+function renderFoot(){const ok=u=>/^https?:\/\//.test(u||""),S=[[cfg.ig,"background:linear-gradient(45deg,#f09433,#dc2743,#bc1888)",IGI,"Instagram"],[cfg.fb,"background:#1877f2","f","Facebook"],[cfg.tt,"background:#000","♪","TikTok"]].filter(s=>ok(s[0])).map(s=>`<a href="${esc(s[0])}" target="_blank" rel="noopener" style="${s[1]}" aria-label="${s[3]}">${s[2]}</a>`),w=waList();if(w.length)S.push(`<a href="${waUrl(w[0].n)}" target="_blank" rel="noopener" style="background:#25d366" aria-label="WhatsApp">${WAI.replace(/30/g,"22")}</a>`);$("foot").innerHTML=(S.length?`<div style="font-weight:700;color:var(--ink)">تابعنا</div><div class="soc">${S.join("")}</div>`:"")+footLinks()+"© NEXORA — اكتشف أكثر.. تسوّق أسهل"}
 const stepsHtml=()=>`<div class="steps"><div><b>١</b>ادفع عربون الحجز</div><div><b>٢</b>نؤكد طلبك</div><div><b>٣</b>نتواصل معك</div><div><b>٤</b>تستلم وتعاين</div></div><div class="note" style="background:var(--sky);color:var(--ink)">سعر المنتج نفسه (مع الشحن أو بدونه حسب الاتفاق) <b>لا يُدفع إلا بعد معاينة المنتج</b>.</div>`;
 const CL={"بانتظار الدفع":"بانتظار تأكيد الدفع","بانتظار المراجعة":"جاري مراجعة التحويل","مدفوع ومؤكد":"تم تأكيد الحجز","أُرسل للمتجر":"جاري تجهيز طلبك والتواصل معك","تم التسليم":"تم التسليم","ملغي":"ملغي"};
 function trackRender(l,p){
  const lv={"بانتظار الدفع":0,"بانتظار المراجعة":1,"مدفوع ومؤكد":2,"أُرسل للمتجر":3,"تم التسليم":4},lb=["تسجيل الطلب","مراجعة الدفع","تأكيد الحجز","التجهيز والتواصل","التسليم والمعاينة"];
- $("tl").innerHTML=l.length?l.map(o=>{const v=lv[o.status];return `<div class="sum"><b>${esc(o.product)}</b><br><span class="st">رقم الطلب ${o.ref} · ${new Date(o.at).toLocaleDateString("ar-EG")}</span><br><span class="pill ${pc(o.status)}">${CL[o.status]}</span>${v===undefined?"":`<div class="tr">${lb.map((_,i)=>`<i class="${i<=v?"on":""}"></i>`).join("")}</div><div class="st">${lb[v]}</div>`}${v!==undefined&&v<4?'<div class="st" style="margin-top:6px">سعر المنتج يُدفع بعد المعاينة.</div>':""}</div>`}).join(""):(p.length>=10?'<div class="empty">لا توجد طلبات لهذا الرقم.</div>':"");
+ $("tl").innerHTML=l.length?l.map(o=>{const v=lv[o.status];return `<div class="sum"><b>${esc(o.product)}</b><br><span class="st">رقم الطلب ${o.ref} · ${new Date(o.at).toLocaleDateString("ar-EG")}</span><br><span class="pill ${pc(o.status)}">${CL[o.status]}</span>${v===undefined?"":`<div class="tr">${lb.map((_,i)=>`<i class="${i<=v?"on":""}"></i>`).join("")}</div><div class="st">${lb[v]}</div>${o.tracking?`<div class="st" style="margin-top:6px">📦 رقم الشحنة: <b>${esc(o.tracking)}</b>${/^https?:\/\//.test(o.courier||"")?` — <a href="${esc(o.courier)}" target="_blank" rel="noopener">تتبع الشحنة</a>`:""}</div>`:""}`}${v!==undefined&&v<4?'<div class="st" style="margin-top:6px">سعر المنتج يُدفع بعد المعاينة.</div>':""}</div>`}).join(""):(p.length>=10?'<div class="empty">لا توجد طلبات لهذا الرقم.</div>':"");
 }
 /* ===== تقييمات مع صور ومشتري مؤكد ===== */
 let rImgs=[];
@@ -366,7 +371,7 @@ const nz=v=>v?new Date(v).getTime():0;
 const mapP=r=>({id:r.id,name:r.name,cat:r.cat,price:+r.price,comm:+(r.comm||0),emoji:r.emoji||"📦",active:r.active!==false,disc:!!r.disc,offerEnd:nz(r.offer_end),dp:r.dp||30,dh:+(r.dh||24),imgs:r.imgs||[],desc:r.descr||"",colors:r.colors||[],sizes:r.sizes||[],outColors:r.out_colors||[],outSizes:r.out_sizes||[],storeId:r.store_id});
 const mapB=r=>({id:r.id,name:r.name,price:+r.price,products:r.product_ids||[],hours:+(r.hours||48),active:r.active!==false,end:nz(r.end_at)});
 const mapR=r=>({id:r.id,pid:r.product_id,name:r.name,stars:r.stars,title:r.title||"",text:r.text||"",at:r.created_at,ok:!!r.ok,imgs:r.imgs||[]});
-const mapO=r=>({id:r.id,ref:r.ref,pid:r.product_id,product:r.product,storeId:r.store_id,price:+r.price,comm:+(r.comm||0),fee:+r.fee,disc:!!r.disc,bundle:!!r.bundle,name:r.name,phone:r.phone,address:r.address,pay:r.pay,txn:r.txn||"",status:r.status,at:r.created_at,items:r.items||[],notes:r.notes||""});
+const mapO=r=>({id:r.id,ref:r.ref,pid:r.product_id,product:r.product,storeId:r.store_id,price:+r.price,comm:+(r.comm||0),fee:+r.fee,disc:!!r.disc,bundle:!!r.bundle,name:r.name,phone:r.phone,address:r.address,pay:r.pay,txn:r.txn||"",status:r.status,at:r.created_at,items:r.items||[],notes:r.notes||"",tracking:r.tracking||"",courier:r.courier_url||""});
 async function loadPublic(){
  const [p,b,r,c]=await Promise.all([rest("GET","products_public?select=*&order=id"),rest("GET","bundles_public?select=*"),rest("GET","reviews?select=*&order=created_at.desc&limit=500"),rest("GET","settings?select=data&id=eq.1")]);
  products=p.map(mapP);bundles=b.map(mapB);reviews=r.map(mapR);cfg=Object.assign(cfg,c[0]?c[0].data:{});
@@ -390,13 +395,13 @@ setInterval(async()=>{const rt=localStorage.getItem("nx_rt");if(!TOK||!rt)return
 async function login(){const m=$("am");m.textContent="جاري الدخول...";try{await adminLogin($("ae").value.trim(),$("ap").value);await loadAdmin();authed=true;renderAdmin()}catch(e){m.textContent=/Invalid login/i.test(e.message)?"البريد أو كلمة المرور غير صحيحة.":e.message}}
 function logout(){TOK=null;localStorage.removeItem("nx_rt");authed=false;location.reload()}
 /* مزامنة التغييرات مع قاعدة البيانات (للمدير فقط) */
-const PUBK=["fee","vf","ip","policy","wa","waMsg","ig","fb","tt","siteUrl"];
+const PUBK=["fee","vf","ip","policy","wa","waMsg","ig","fb","tt","siteUrl","pg_about","pg_returns","pg_privacy","pg_faq"];
 const cfgPub=()=>{const o={};PUBK.forEach(k=>o[k]=cfg[k]==null?"":cfg[k]);o.fee=+cfg.fee||50;return o};
 const T={
  stores:{arr:()=>stores,to:x=>({id:x.id,name:x.name,cat:x.cat,phone:x.phone||""})},
  products:{arr:()=>products,to:p=>({id:p.id,store_id:p.storeId||null,name:p.name,cat:p.cat||catOf(p),price:p.price,comm:p.comm||0,emoji:p.emoji,active:p.active,disc:!!p.disc,offer_end:p.offerEnd?new Date(p.offerEnd).toISOString():null,dp:p.dp||30,dh:p.dh||24,imgs:p.imgs||[],descr:p.desc||"",colors:p.colors||[],sizes:p.sizes||[],out_colors:p.outColors||[],out_sizes:p.outSizes||[]})},
  bundles:{arr:()=>bundles,to:b=>({id:b.id,name:b.name,price:b.price,product_ids:b.products,hours:b.hours||48,active:b.active,end_at:new Date(b.end).toISOString()})},
- orders:{arr:()=>orders,to:o=>({id:o.id,status:o.status,txn:o.txn||""}),patch:1,noDelete:1},
+ orders:{arr:()=>orders,to:o=>({id:o.id,status:o.status,txn:o.txn||"",tracking:o.tracking||"",courier_url:o.courier||""}),patch:1,noDelete:1},
  reviews:{arr:()=>reviews,to:r=>({id:r.id}),delOnly:1}
 };
 function snap(){for(const k in T){SNAP[k]={};T[k].arr().forEach(x=>SNAP[k][x.id]=JSON.stringify(T[k].to(x)))}}
@@ -413,7 +418,7 @@ async function sync(){
   for(const k of ["stores","products","bundles","orders","reviews"]){
    const t=T[k],cur={};t.arr().forEach(x=>cur[x.id]=t.to(x));
    const ch=Object.keys(cur).filter(id=>SNAP[k][id]!==JSON.stringify(cur[id]));
-   if(t.patch){for(const id of ch)await rest("PATCH",k+"?id=eq."+id,{status:cur[id].status,txn:cur[id].txn})}
+   if(t.patch){for(const id of ch)await rest("PATCH",k+"?id=eq."+id,{status:cur[id].status,txn:cur[id].txn,tracking:cur[id].tracking,courier_url:cur[id].courier_url})}
    else if(!t.delOnly&&ch.length)await rest("POST",k+"?on_conflict=id",ch.map(id=>cur[id]),{Prefer:"resolution=merge-duplicates,return=minimal"});
    if(!t.noDelete)for(const id of Object.keys(SNAP[k]))if(!(id in cur))await rest("DELETE",k+"?id=eq."+id);
    SNAP[k]={};for(const id in cur)SNAP[k][id]=JSON.stringify(cur[id]);
@@ -446,7 +451,7 @@ async function confirmPaid(){
 }
 async function trackList(){
  const p=$("tp").value.trim();if(p.length<10){trackRender([],p);return}
- try{const r=await rpc("track_orders",{p_phone:p});trackRender(r.map(x=>({ref:x.ref,product:x.product,status:x.status,at:x.created_at})),p)}
+ try{const r=await rpc("track_orders",{p_phone:p});trackRender(r.map(x=>({ref:x.ref,product:x.product,status:x.status,at:x.created_at,tracking:x.tracking,courier:x.courier_url})),p)}
  catch(e){$("tl").innerHTML='<div class="empty">'+esc(e.message)+'</div>'}
 }
 async function saveRev(pid){
@@ -514,8 +519,8 @@ function renderProd(id){
  selC="";selS="";const im=p.imgs||[],oc=p.outColors||[],os=p.outSizes||[];
  const ch=(a,k,o)=>(a||[]).map(c=>o.includes(c)?`<button class="chip x" disabled>${esc(c)}</button>`:`<button class="chip" onclick="pick('${k}',this)">${esc(c)}</button>`).join("");
  const dead=((p.colors||[]).length&&p.colors.every(c=>oc.includes(c)))||((p.sizes||[]).length&&p.sizes.every(c=>os.includes(c)));
- $("app").innerHTML=`<p><a href="#store">→ رجوع للمنتجات</a></p><div class="pd"><div>${im.length?`<div class="car" id="car" onscroll="carDot()">${im.map(s=>`<div class="sl"><img src="${s}" alt=""></div>`).join("")}</div>${im.length>1?`<div class="dots" id="dots">${im.map((_,i)=>`<i class="${i?"":"on"}" onclick="goSl(${i})"></i>`).join("")}</div>`:""}`:`<div class="main">${esc(p.emoji)}</div>`}</div><div><div class="tag">${esc(catOf(p))}</div><h1 style="margin:6px 0;font-size:22px">${esc(p.name)}</h1>${starsLine(p.id)}${priceHtml(p)}${(p.colors||[]).length?`<b>اللون</b><div class="chips">${ch(p.colors,"C",oc)}</div>`:""}${(p.sizes||[]).length?`<b>المقاس</b><div class="chips">${ch(p.sizes,"S",os)}</div>`:""}<p style="line-height:1.9;color:var(--muted);white-space:pre-line">${esc(p.desc||"")}</p>${dead?'<div class="note">هذا المنتج غير متاح حالياً.</div>':`<div class="pbtn"><button class="btn" onclick="addFromProd(${p.id})">أضف إلى العربة</button><button class="btn p" onclick="buyNow(${p.id})">اطلب الآن</button></div>`}</div></div><div class="box" id="rvs"></div>${relHtml(p)}${stepsHtml()}`;
- drawRev(p.id);
+ $("app").innerHTML=`<p><a href="#store">→ رجوع للمنتجات</a></p><div class="pd"><div>${im.length?`<div class="car" id="car" onscroll="carDot()">${im.map(s=>`<div class="sl"><img src="${s}" alt="" onclick="zoomImg(this.src)"></div>`).join("")}</div>${im.length>1?`<div class="dots" id="dots">${im.map((_,i)=>`<i class="${i?"":"on"}" onclick="goSl(${i})"></i>`).join("")}</div>`:""}`:`<div class="main">${esc(p.emoji)}</div>`}</div><div><div class="tag">${esc(catOf(p))}</div><h1 style="margin:6px 0;font-size:22px">${esc(p.name)} <button class="wb" data-h="${p.id}" onclick="toggleWish(${p.id})">${wish.includes(p.id)?"♥":"♡"}</button></h1>${starsLine(p.id)}${priceHtml(p)}${(p.colors||[]).length?`<b>اللون</b><div class="chips">${ch(p.colors,"C",oc)}</div>`:""}${(p.sizes||[]).length?`<b>المقاس</b><div class="chips">${ch(p.sizes,"S",os)}</div>`:""}<p style="line-height:1.9;color:var(--muted);white-space:pre-line">${esc(p.desc||"")}</p>${dead?'<div class="note">هذا المنتج غير متاح حالياً.</div>':`<div class="pbtn"><button class="btn" onclick="addFromProd(${p.id})">أضف إلى العربة</button><button class="btn p" onclick="buyNow(${p.id})">اطلب الآن</button></div>`}</div></div><div class="box" id="rvs"></div>${relHtml(p)}${rvRail(p.id)}${stepsHtml()}`;
+ drawRev(p.id);rvAdd(p.id);
 }
 function fillBundles(){
  const b=$("bnd");if(!b)return;
@@ -539,7 +544,7 @@ function itemsHtml(o){
  return o.items.map(it=>`<div style="margin-bottom:8px"><b>${esc(it.name)}</b> ×${it.qty}${it.color?" — "+esc(it.color):""}${it.size?" — مقاس "+esc(it.size):""}<br><span class="st">${it.parts?it.parts.map(p=>esc(p.name)+(p.color?" / "+esc(p.color):"")+(p.size?" / "+esc(p.size):"")+" ← "+esc(sName(p.store_id))).join("<br>"):"المتجر: "+esc(sName(it.store_id))}</span></div>`).join("");
 }
 function aOrders(){
- $("ac").innerHTML=`<div class="bar"><h2>الطلبات</h2></div><div class="box tw" style="margin:0"><table style="min-width:880px"><tr><th>الطلب</th><th>العميل</th><th>التفاصيل</th><th>الإجمالي</th><th>الدفع</th><th>الحالة</th><th></th></tr>${orders.map(o=>`<tr><td><b>${esc(o.ref)}</b><br><span class="st">${new Date(o.at).toLocaleDateString("ar-EG")}</span></td><td>${esc(o.name)}<br><span class="st" dir="ltr">${esc(o.phone)}</span><br><span class="st">${esc(o.address)}</span></td><td>${itemsHtml(o)}${o.notes?`<div class="note" style="margin:6px 0 0">📝 ${esc(o.notes)}</div>`:""}</td><td>${money(o.price)}</td><td>${o.pay}<br><span class="st">${esc(o.txn||"—")}</span></td><td><select onchange="setStatus(${o.id},this.value)">${ST.map(s=>`<option ${s===o.status?"selected":""}>${s}</option>`).join("")}</select></td><td>${PAID.includes(o.status)?`<button class="btn s g" onclick="sendWA(${o.id})">إرسال للمتجر</button>`:""}</td></tr>`).join("")||'<tr><td colspan="7" class="empty">لا توجد طلبات بعد.</td></tr>'}</table></div>`;
+ $("ac").innerHTML=`<div class="bar"><h2>الطلبات</h2></div><div class="box tw" style="margin:0"><table style="min-width:880px"><tr><th>الطلب</th><th>العميل</th><th>التفاصيل</th><th>الإجمالي</th><th>الدفع</th><th>الحالة</th><th></th></tr>${orders.map(o=>`<tr><td><b>${esc(o.ref)}</b><br><span class="st">${new Date(o.at).toLocaleDateString("ar-EG")}</span></td><td>${esc(o.name)}<br><span class="st" dir="ltr">${esc(o.phone)}</span><br><span class="st">${esc(o.address)}</span></td><td>${itemsHtml(o)}${o.notes?`<div class="note" style="margin:6px 0 0">📝 ${esc(o.notes)}</div>`:""}</td><td>${money(o.price)}</td><td>${o.pay}<br><span class="st">${esc(o.txn||"—")}</span></td><td><select onchange="setStatus(${o.id},this.value)">${ST.map(s=>`<option ${s===o.status?"selected":""}>${s}</option>`).join("")}</select><br><input style="margin-top:6px;width:130px" placeholder="رقم الشحنة" value="${esc(o.tracking||"")}" onchange="setTrk(${o.id},'tracking',this.value)"><input style="margin-top:4px;width:130px" placeholder="رابط التتبع" value="${esc(o.courier||"")}" onchange="setTrk(${o.id},'courier',this.value)"></td><td>${PAID.includes(o.status)?`<button class="btn s g" onclick="sendWA(${o.id})">إرسال للمتجر</button>`:""}</td></tr>`).join("")||'<tr><td colspan="7" class="empty">لا توجد طلبات بعد.</td></tr>'}</table></div>`;
 }
 function sendWA(id){
  const o=orders.find(x=>x.id===id);if(!(o.items||[]).length)return sendWAold(id);
@@ -570,6 +575,54 @@ async function installApp(){
  else openM(`<h3>تثبيت التطبيق</h3><p style="line-height:2">اضغط زر المشاركة <b>⎙</b> في Safari ثم اختر <b>Add to Home Screen</b> (إضافة إلى الشاشة الرئيسية).</p><button class="btn p" style="width:100%" onclick="closeM()">حسناً</button>`);
 }
 if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+/* ===== مرحلة 1: بحث وفلترة وترتيب + مفضلة + صفحات ثقة ===== */
+let sortBy="new",offOnly=false,maxP=0,wish=[];
+try{wish=JSON.parse(localStorage.getItem("nx_wish")||"[]")}catch(e){}
+const rvList=()=>{try{return JSON.parse(localStorage.getItem("nx_rv")||"[]")}catch(e){return[]}};
+function rvAdd(id){try{localStorage.setItem("nx_rv",JSON.stringify([id,...rvList().filter(x=>x!==id)].slice(0,12)))}catch(e){}}
+function toggleWish(id){
+ const i=wish.indexOf(id);if(i<0){wish.push(id);toast("أُضيف للمفضلة ❤️")}else{wish.splice(i,1);toast("اتشال من المفضلة")}
+ try{localStorage.setItem("nx_wish",JSON.stringify(wish))}catch(e){}
+ document.querySelectorAll('[data-h="'+id+'"]').forEach(b=>b.textContent=wish.includes(id)?"♥":"♡");
+}
+function hcard(r){return `<article class="prod hc" onclick="location.hash='p-${r.id}'"><div class="ph">${offerOn(r)?`<span class="badge">خصم ${r.dp||30}%</span>`:""}<button class="heart" data-h="${r.id}" onclick="event.stopPropagation();toggleWish(${r.id})">${wish.includes(r.id)?"♥":"♡"}</button>${thumb((r.imgs||[])[0],r.emoji)}</div><div class="pb"><h3>${esc(r.name)}</h3>${starsLine(r.id)}${priceHtml(r)}</div></article>`}
+function gcard(p){return `<article class="prod"><div class="ph" style="cursor:pointer" onclick="location.hash='p-${p.id}'">${offerOn(p)?`<span class="badge">خصم ${p.dp||30}%</span>`:""}<button class="heart" data-h="${p.id}" onclick="event.stopPropagation();toggleWish(${p.id})">${wish.includes(p.id)?"♥":"♡"}</button>${thumb((p.imgs||[])[0],p.emoji)}</div><div class="pb"><div class="tag">${esc(catOf(p))}</div><h3>${esc(p.name)}</h3>${starsLine(p.id)}${priceHtml(p)}<button class="btn p" onclick="location.hash='p-${p.id}'">التفاصيل والطلب</button></div></article>`}
+const rail=(t,l)=>l.length?`<h2 class="rt">${t}</h2><div class="hs">${l.map(hcard).join("")}</div>`:"";
+const rvRail=id=>rail("👀 شاهدت مؤخراً",rvList().filter(x=>x!==id).map(i=>products.find(p=>p.id===i)).filter(p=>p&&p.active));
+function applyView(){
+ const g=$("grid");if(!g)return;
+ const q=($("q")||{value:""}).value.trim().toLowerCase(),act=products.filter(p=>p.active);
+ const by={new:(a,b)=>b.id-a.id,low:(a,b)=>pNow(a)-pNow(b),high:(a,b)=>pNow(b)-pNow(a),rate:(a,b)=>avg(b.id)-avg(a.id)||rv(b.id).length-rv(a.id).length,disc:(a,b)=>(offerOn(b)?b.dp||30:0)-(offerOn(a)?a.dp||30:0)};
+ const l=act.filter(p=>(cat==="الكل"||catOf(p)===cat)&&(p.name.toLowerCase().includes(q)||catOf(p).toLowerCase().includes(q))&&(!offOnly||offerOn(p))&&(!maxP||pNow(p)<=maxP)).sort(by[sortBy]||by.new);
+ g.innerHTML=l.map(gcard).join("")||'<div class="empty" style="grid-column:1/-1">لا توجد منتجات مطابقة.</div>';
+ const R=$("rails");if(!R)return;
+ R.innerHTML=(!q&&cat==="الكل"&&!offOnly&&!maxP)?rail("🔥 عروض اليوم",act.filter(offerOn).slice(0,12))+rail("🆕 وصل حديثاً",act.slice().sort(by.new).slice(0,10))+rail("⭐ الأعلى تقييماً",act.filter(p=>rv(p.id).length&&avg(p.id)>=4).sort(by.rate).slice(0,10))+rvRail(0):"";
+}
+function renderStore(){renderStore0();applyView()}
+function onSearch(){renderStore();const q=$("q").value.trim().toLowerCase(),b=$("sg");if(q.length<2){b.style.display="none";return}
+ const l=products.filter(p=>p.active&&(p.name.toLowerCase().includes(q)||catOf(p).toLowerCase().includes(q))).slice(0,6);
+ b.innerHTML=l.map(p=>`<a onclick="$('sg').style.display='none';location.hash='p-${p.id}'">${esc(p.name)} <span class="st">— ${money(pNow(p))}</span></a>`).join("");b.style.display=l.length?"block":"none"}
+document.addEventListener&&document.addEventListener("click",e=>{const b=$("sg");if(b&&!(e.target.closest&&e.target.closest("#sbox")))b.style.display="none"});
+function renderWish(){
+ const l=wish.map(i=>products.find(p=>p.id===i)).filter(p=>p&&p.active);
+ $("app").innerHTML=`<h2 style="margin-top:18px">❤️ المفضلة</h2>${l.length?`<div class="grid">${l.map(gcard).join("")}</div>`:'<div class="empty">لسه ما أضفتش منتجات للمفضلة. دوس على ♡ في أي منتج.</div>'}`;
+}
+function zoomImg(src){const z=document.createElement("div");z.className="zoom";z.innerHTML=`<button onclick="this.parentNode.remove()">✕</button><img src="${src}" alt="">`;document.body.appendChild(z)}
+const PGS={about:"من نحن",returns:"الاسترجاع والاستبدال",privacy:"سياسة الخصوصية",faq:"الأسئلة الشائعة",contact:"تواصل معنا"};
+const PGD={
+ about:"NEXORA منصة تسوّق تعرض منتجات مختارة، وتستلم طلبك وتؤكده وتتواصل معك لحد ما يوصلك.\nهدفنا إن اختيارك يوصلك بأسهل طريقة وبمعاينة قبل ما تدفع سعر المنتج.",
+ returns:"تقدر تعاين المنتج عند الاستلام قبل دفع سعره.\nلو في أي مشكلة أو استفسار عن استبدال، تواصل معنا وهنخدمك بأسرع وقت.",
+ privacy:"بنستخدم بياناتك (الاسم، رقم الموبايل، العنوان) فقط لتأكيد طلبك وتوصيله والتواصل معك.\nبيانات التوصيل بتتعرض بس للجهة المسؤولة عن تجهيز طلبك.",
+ faq:"كيف أطلب؟\nاختار المنتج واللون والمقاس، أضفه للعربة، وأتمّ الطلب وادفع عربون جدية الحجز.\n\nمتى أدفع سعر المنتج؟\nبعد ما تعاين المنتج عند الاستلام.\n\nإزاي أتابع طلبي؟\nمن صفحة «طلباتي» برقم الموبايل اللي سجلت بيه.\n\nلو عندي استفسار؟\nتواصل معنا من صفحة «تواصل معنا» أو واتساب."};
+function renderPage(h){
+ let body;
+ if(h==="contact"){const w=waList(),so=[["ig","إنستغرام"],["fb","فيسبوك"],["tt","تيك توك"]].filter(x=>/^https?:/.test(cfg[x[0]]||""));
+  body=w.map(x=>`<p>📞 ${esc(x.l)}: <a href="${waUrl(x.n)}" target="_blank" rel="noopener">واتساب</a></p>`).join("")+so.map(x=>`<p><a href="${esc(cfg[x[0]])}" target="_blank" rel="noopener">${x[1]}</a></p>`).join("")||"<p>وسائل التواصل هتتضاف قريباً.</p>"}
+ else body=`<div style="white-space:pre-line">${esc(cfg["pg_"+h]||PGD[h])}</div>`;
+ $("app").innerHTML=`<div class="box pg" style="margin-top:18px"><h2>${PGS[h]}</h2>${body}</div>`;
+}
+const footLinks=()=>`<div class="fl">${Object.keys(PGS).map(k=>`<a href="#${k}">${PGS[k]}</a>`).join("")}</div>`;
+function setTrk(id,f,v){const o=orders.find(x=>x.id===id);o[f]=v.trim();save()}
 (async()=>{
  $("app").innerHTML='<div class="empty">جاري التحميل...</div>';
  try{await loadPublic()}catch(e){$("app").innerHTML='<div class="empty">تعذّر تحميل البيانات. تأكد من الاتصال ثم حدّث الصفحة.</div>';return}
