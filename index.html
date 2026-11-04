@@ -82,7 +82,7 @@ footer{text-align:center;color:var(--muted);font-size:12px;padding:24px 0}
 <header><div class="wrap head">
 <div class="logo" onclick="location.hash='store'">NEX<span>ORA</span></div>
 <div class="search" id="sbox"><input id="q" placeholder="ابحث عن منتج..." oninput="renderStore()"></div>
-<nav><a href="#store">الرئيسية</a><a href="#track">طلباتي</a><a href="#terms">الشروط</a><a href="#cart">🛒 العربة<b id="cc"></b></a></nav>
+<nav><a href="#store">الرئيسية</a><a href="#track">طلباتي</a><a href="#terms">الشروط</a><a href="#cart">🛒 العربة<b id="cc"></b></a><a id="inst" onclick="installApp()" style="display:none;cursor:pointer;background:var(--sky)">⬇ ثبّت التطبيق</a></nav>
 </div></header>
 <main class="wrap" id="app"></main>
 <footer id="foot"></footer>
@@ -558,6 +558,18 @@ async function login(){
  catch(e){L.n=(L.n||0)+1;if(L.n>=5){L.until=Date.now()+10*60000;L.n=0}localStorage.setItem("nx_lk",JSON.stringify(L));m.textContent=/Invalid login/i.test(e.message)?"البريد أو كلمة المرور غير صحيحة.":e.message}
 }
 updCC();
+/* ===== تثبيت التطبيق ===== */
+let DP=null;
+const isStd=()=>(window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||navigator.standalone;
+const isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent||"");
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();DP=e;if(!isStd())$("inst").style.display="inline-block"});
+window.addEventListener("appinstalled",()=>{$("inst").style.display="none";toast("تم تثبيت التطبيق ✓")});
+if(isIOS&&!isStd())$("inst").style.display="inline-block";
+async function installApp(){
+ if(DP){DP.prompt();try{await DP.userChoice}catch(e){}DP=null;$("inst").style.display="none"}
+ else openM(`<h3>تثبيت التطبيق</h3><p style="line-height:2">اضغط زر المشاركة <b>⎙</b> في Safari ثم اختر <b>Add to Home Screen</b> (إضافة إلى الشاشة الرئيسية).</p><button class="btn p" style="width:100%" onclick="closeM()">حسناً</button>`);
+}
+if("serviceWorker" in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 (async()=>{
  $("app").innerHTML='<div class="empty">جاري التحميل...</div>';
  try{await loadPublic()}catch(e){$("app").innerHTML='<div class="empty">تعذّر تحميل البيانات. تأكد من الاتصال ثم حدّث الصفحة.</div>';return}
