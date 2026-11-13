@@ -70,7 +70,7 @@ nav{display:flex;gap:6px}nav a{padding:9px 12px;border-radius:9px;color:var(--in
 .hs{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 16px 12px;margin:0 -16px 20px;scrollbar-width:none}.hs::-webkit-scrollbar{display:none}
 .hc{flex:0 0 165px;scroll-snap-align:start;cursor:pointer}.hc .ph{height:150px}.hc h3{font-size:13px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:34px}
 .bv{display:flex;align-items:center;gap:6px;overflow-x:auto;margin:10px 0}.bv .pl{font-size:22px;font-weight:900;color:var(--red);flex:none}
-.bt{flex:1 0 84px;max-width:130px;text-align:center}.bt img,.bt>span{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px;background:var(--sky);display:flex;align-items:center;justify-content:center;font-size:36px}.bt small{display:block;font-size:11px;margin-top:4px;line-height:1.4}
+.bt{flex:1 1 0;min-width:72px;max-width:140px;text-align:center;cursor:pointer}.bt img,.bt>span{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:12px;background:var(--sky);display:flex;align-items:center;justify-content:center;font-size:36px}.bt small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:11px;margin-top:4px;line-height:1.4}.bh{margin:2px 0 4px}.cl .bh{display:none}
 .cl{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}.cl .ci{flex:0 0 96px}.cl .ci .bt{max-width:96px}.cl .cb{flex:1}.cl .ct{font-weight:900;white-space:nowrap}
 .qty{display:flex;align-items:center;gap:8px;margin-top:6px}.qty button{width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:var(--card);font-size:18px}.qty .rm{width:auto;padding:0 10px;font-size:12px;color:var(--red)}.qty span{min-width:22px;text-align:center;font-weight:700}
 .search{position:relative}.sg{position:absolute;top:100%;right:0;left:0;background:var(--card);border:1px solid var(--line);border-radius:10px;z-index:30;display:none;max-height:260px;overflow:auto;box-shadow:0 6px 18px #0002}.sg a{display:block;padding:10px 12px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;font-size:13px;cursor:pointer}
@@ -472,7 +472,8 @@ const lkey=l=>[l.id,l.color||"",l.size||"",(l.opts||[]).map(o=>o.pid+":"+o.color
 function addLine(l){const x=cart.find(c=>lkey(c)===lkey(l));if(x)x.qty=Math.min(20,x.qty+l.qty);else cart.push(l);saveCart()}
 const thumb=(img,em)=>img?`<img src="${img}" alt="">`:`<span>${esc(em||"📦")}</span>`;
 const bundleProds=b=>b.products.map(id=>products.find(p=>p.id===id));
-function bundleVisual(ps){return `<div class="bv">${ps.map((p,i)=>`${i?'<span class="pl">+</span>':""}<div class="bt">${thumb((p.imgs||[])[0],p.emoji)}<small>${esc(p.name)}</small></div>`).join("")}</div>`}
+function goProd(id){closeM();location.hash="p-"+id}
+function bundleVisual(ps){return `<div class="bvw"><div class="bv">${ps.map((p,i)=>`${i?'<span class="pl">+</span>':""}<div class="bt" onclick="goProd(${p.id})">${thumb((p.imgs||[])[0],p.emoji)}<small>${esc(p.name)}</small></div>`).join("")}</div><div class="st bh">👆 اضغط على أي منتج لمعاينته لوحده</div></div>`}
 function lineInfo(l){
  if(String(l.id)[0]==="B"){const b=bundles.find(x=>"B"+x.id===l.id);if(!b||!bOn(b))return null;const ps=bundleProds(b);if(ps.some(p=>!p||!p.active))return null;
   return{name:"🎁 "+b.name,unit:b.price,reg:ps.reduce((s,p)=>s+pNow(p),0),vis:bundleVisual(ps),sub:ps.map(p=>{const o=(l.opts||[]).find(o=>o.pid===p.id)||{};return p.name+(o.color?" / "+o.color:"")+(o.size?" / مقاس "+o.size:"")})}}
